@@ -1,5 +1,6 @@
 '''
-    The package antsys is a general purpose ant system
+------------------------------------------------------------------------------
+    antsys - general purpose ant colony optimization
     Copyright (C) 2021  Alison Zille Lopes
 
     This program is free software: you can redistribute it and/or modify
@@ -14,6 +15,7 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+------------------------------------------------------------------------------
 '''
 
 import random
