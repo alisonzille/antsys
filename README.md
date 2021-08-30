@@ -1,2 +1,2 @@
 # antsys
-General purpose ant system
+General purpose ant colony optimization python package
