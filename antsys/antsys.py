@@ -38,7 +38,7 @@ class Edge:
       information to calculate the cost of a possible solution.
   '''
   
-  def __init__(self, start, end, info=None, pheromone=None):
+  def __init__(self, start, end, info, pheromone=None):
     '''
     Initialize the edge: *start*, *end*, *info* and *pheromone*.
     '''
@@ -59,7 +59,20 @@ class Edge:
 # h_func = função heurística
 # r_func = função de regras
 class AntWorld:
-  def __init__(self, nodes, r_func=None, c_func=None, h_func=None, init_phe=0.1):
+  '''
+  Description: The nodes and edges of a particular problem.
+  
+  Attributes:
+    * nodes:
+    * edges:
+    * r_func:
+    * c_func:
+    * h_func:
+    * init_phe:
+  
+  Additional Information:
+  '''
+  def __init__(self, nodes, r_func, c_func, h_func, init_phe=0.1):
     self.nodes = nodes
     self.edges = []
 
@@ -71,12 +84,9 @@ class AntWorld:
     for start in nodes:
       for end in nodes:
         if start is not end:
-          if r_func is None:
-            self.edges.append(Edge(star=start, end=end, pheromone=init_phe))
-          else:
-            info_list = r_func(start, end)
-            for info in info_list:
-              self.edges.append(Edge(start, end, info, init_phe))
+          info_list = r_func(start, end)
+          for info in info_list:
+            self.edges.append(Edge(start, end, info, init_phe))
 
   def reset_pheromone():
     for edge in self.edges:
