@@ -20,14 +20,28 @@
 
 import random
 import numpy as np
-###########################################################################
-# Classe Edge
-# start = nó inicial
-# end = no final
-# info = informação do nó. Pode havez mais de uma aresta para um nó.
-# pheromone = feromônio depositado.
+
 class Edge:
+  '''
+  Description: The link (edge) between starting and ending nodes
+  
+  Attributes:
+    * start: node at the start of the edge.
+    * end: node at the end of the edge
+    * info: information about the edge. 
+    * pheromone: amount of pheromone on the edge (default=0.1).
+    
+  Additional Information:
+    * The nodes, both *start* and *end*, must have a unique identification.
+      The use of objects is advised.
+    * The *info* attribute is related to the edge cost or other vital
+      information to calculate the cost of a possible solution.
+  '''
+  
   def __init__(self, start, end, info=None, pheromone=None):
+    '''
+    Initialize the edge: *start*, *end*, *info* and *pheromone*.
+    '''
     self.start = start
     self.end = end
     self.info = info
