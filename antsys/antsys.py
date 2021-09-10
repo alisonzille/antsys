@@ -63,12 +63,12 @@ class AntWorld:
   Description: The nodes and edges of a particular problem.
   
   Attributes:
-    * nodes:
-    * edges:
-    * r_func:
-    * c_func:
-    * h_func:
-    * init_phe:
+    * nodes: list of nodes.
+    * edges: list of edges.
+    * r_func: function that defines the world creation rules.
+    * c_func: function that calculates the cost of a solution.
+    * h_func: heuristic function to evaluate a choice.
+    * init_phe: initial pheromone per edge
   
   Additional Information:
   '''
