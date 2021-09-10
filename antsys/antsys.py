@@ -52,12 +52,6 @@ class Edge:
 
 
 
-###########################################################################
-# Classe AntWorld
-# nodes = lista de nós
-# c_func = função custo
-# h_func = função heurística
-# r_func = função de regras
 class AntWorld:
   '''
   Description: The nodes and edges of a particular problem.
@@ -66,11 +60,19 @@ class AntWorld:
     * nodes: list of nodes.
     * edges: list of edges.
     * r_func: function that defines the world creation rules.
-    * c_func: function that calculates the cost of a solution.
-    * h_func: heuristic function to evaluate a choice.
+    * c_func: function used by ants to calculate the cost of a solution.
+    * h_func: heuristic function used by ants to evaluate a choice.
     * init_phe: initial pheromone per edge
   
   Additional Information:
+    * The *r_func* receives two nodes, *start* and *stop*, and returns a list 
+      of *info* to create edges (objects of the class 'Edge'). It is possible 
+      to create more than one edge from the same starting and ending nodes.
+    * The *c_func* receives a path (final list of traversed edges) and returns 
+      its cost.
+    * The *h_func* receives a partial path (list of traversed edges till the 
+      moment) and a candidate edge (possible choice) and returns an evaluation 
+      of this candidate.
   '''
   def __init__(self, nodes, r_func, c_func, h_func, init_phe=0.1):
     self.nodes = nodes
