@@ -40,7 +40,11 @@ class Edge:
   
   def __init__(self, start, end, info, pheromone=None):
     '''
-    Initialize the edge: *start*, *end*, *info* and *pheromone*.
+    Initialize the edge
+    
+    Details: 
+      This method initializes the attributes *start*, *end*, *info* and 
+      *pheromone*.
     '''
     self.start = start
     self.end = end
@@ -75,6 +79,14 @@ class AntWorld:
       of this candidate.
   '''
   def __init__(self, nodes, r_func, c_func, h_func, init_phe=0.1):
+    '''
+    Initialize the world.
+    
+    Details:
+      The constructor initializes the attributes *nodes* and *init_phe* and defines 
+      the functions *r_func*, *c_func* and *h_func*. So, using *r_func* and *nodes*,
+      it creates the edges which define the world.      
+    '''
     self.nodes = nodes
     self.edges = []
 
@@ -83,6 +95,7 @@ class AntWorld:
     self.c_func = c_func
     self.h_func = h_func
 
+    # creating edges
     for start in nodes:
       for end in nodes:
         if start is not end:
@@ -91,6 +104,9 @@ class AntWorld:
             self.edges.append(Edge(start, end, info, init_phe))
 
   def reset_pheromone():
+    '''
+    Reset the amount of pheromone on every edge to *init_phe*.
+    '''
     for edge in self.edges:
       edge.pheromone = self.init_phe
 
