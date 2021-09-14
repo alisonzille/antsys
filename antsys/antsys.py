@@ -123,6 +123,22 @@ class AntWorld:
 # alpha = importância relativa do feromônio
 # betha = importância relativa da heurística
 class Ant:
+  '''
+  Description: A sigle solution finder (ant)
+  
+  Attributes:
+    * world: an object of the class 'AntWorld' which represents a problem
+    * alpha: the relative importance of pheromone (default=1)
+    * betha: the relative importance of the heuristic function (default=3)
+    * start: ant's initial position/node
+    * l_best: best solution found by the ant (local best)
+    * traveled: list of traversed edges
+    * visited: list of visited nodes
+    * unvisited: list of not yet visited nodes
+    
+  Additional Information:
+  
+  '''
   def __init__(self, world, s_index, alpha, betha):
     self.world = world
     self.alpha = alpha
