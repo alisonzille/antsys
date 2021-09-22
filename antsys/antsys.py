@@ -106,7 +106,7 @@ class AntWorld:
     self.c_func = c_func
     self.h_func = h_func
 
-    # Creating edges.
+    # Create the edges.
     for start in nodes:
       for end in nodes:
         if start is not end:
@@ -211,7 +211,7 @@ class Ant:
       * candidates: a list of candidate edges (possible movements).
     '''
     
-    # Calculating probabilities related to pheromone and the heuristic
+    # Calculate probabilities related to pheromone and the heuristic
     # function.
     h_probs = []
     p_probs = []
@@ -227,10 +227,10 @@ class Ant:
     h_probs = h_probs/sum(h_probs)
     p_probs = p_probs/sum(p_probs)
     
-    # Combining both probabilities using *alpha* and *betha*
+    # Combine both probabilities using *alpha* and *betha*
     f_probs = (self.alpha * p_probs + self.betha * h_probs)/ (self.alpha + self.betha)
 
-    # Selecting the edge to be traversed
+    # Select the edge to be traversed
     draw = random.random()
     roullete = 0
     for i in range(len(f_probs)):
