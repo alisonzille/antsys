@@ -27,9 +27,9 @@ class Edge:
   
   Attributes:
     * start: node at the start of the edge.
-    * end: node at the end of the edge
+    * end: node at the end of the edge.
     * info: information about the edge. 
-    * pheromone: amount of pheromone on the edge (default=0.1).
+    * pheromone: amount of pheromone on the edge.
     
   Additional Information:
     * The nodes, both *start* and *end*, must have a unique identification.
@@ -38,21 +38,24 @@ class Edge:
       information to calculate the cost of a possible solution.
   '''
   
-  def __init__(self, start, end, info, pheromone=None):
+  def __init__(self, start, end, info, pheromone=0.1):
     '''
     Initialize the edge
     
     Details: 
       This method initializes the attributes *start*, *end*, *info* and 
       *pheromone*.
+    
+    Parameters:
+      * start: node at the start of the edge.
+      * end: node at the end of the edge.
+      * info: information about the edge. 
+      * pheromone: amount of pheromone on the edge (default=0.1).
     '''
     self.start = start
     self.end = end
     self.info = info
-    if pheromone is None:
-      self.pheromone = 0.1
-    else:
-      self.pheromone = pheromone
+    self.pheromone = pheromone
 
 
 
@@ -66,7 +69,7 @@ class AntWorld:
     * r_func: function that defines the world creation rules.
     * c_func: function used by ants to calculate the cost of a solution.
     * h_func: heuristic function used by ants to evaluate a choice.
-    * init_phe: initial pheromone per edge
+    * init_phe: initial pheromone per edge.
   
   Additional Information:
     * The *r_func* receives two nodes, *start* and *stop*, and returns a list 
@@ -85,7 +88,14 @@ class AntWorld:
     Details:
       The constructor initializes the attributes *nodes* and *init_phe* and defines 
       the functions *r_func*, *c_func* and *h_func*. So, using *r_func* and *nodes*,
-      it creates the edges which define the world.      
+      it creates the edges which define the world.
+      
+    Parameters:
+      * nodes: list of nodes.
+      * r_func: function that defines the world creation rules.
+      * c_func: function used by ants to calculate the cost of a solution.
+      * h_func: heuristic function used by ants to evaluate a choice.
+      * init_phe: initial pheromone per edge (default=0.1).
     '''
     self.nodes = nodes
     self.edges = []
@@ -112,34 +122,40 @@ class AntWorld:
 
 
 
-###########################################################################
-# Classe Ant
-# l_best = melhor local - tupla (custo, nós visitados, arestas)
-# start = nó de partida
-# visited = nós visitados
-# unvisited = nós não visitados
-# traveled =  arestas percorridas
-# world = mundo
-# alpha = importância relativa do feromônio
-# betha = importância relativa da heurística
 class Ant:
   '''
   Description: A sigle solution finder (ant)
   
   Attributes:
-    * world: an object of the class 'AntWorld' which represents a problem
-    * alpha: the relative importance of pheromone (default=1)
-    * betha: the relative importance of the heuristic function (default=3)
-    * start: ant's initial position/node
-    * l_best: best solution found by the ant (local best)
-    * traveled: list of traversed edges
-    * visited: list of visited nodes
-    * unvisited: list of not yet visited nodes
+    * world: an object of the class 'AntWorld' which represents a problem.
+    * alpha: the relative importance of pheromone.
+    * betha: the relative importance of the heuristic function.
+    * start: ant's initial position/node.
+    * l_best: best solution found by the ant (local best).
+    * traveled: list of traversed edges.
+    * visited: list of visited nodes.
+    * unvisited: list of not yet visited nodes.
     
   Additional Information:
-  
+    * The path is constructed and stored in the attribute *traveled*.
+    * Both the deposited pheromone and the value returned by the function *world.h_func* 
+      can be translated to probability values for any edge. These probability values are
+      combined, using *alpha* and *betha*, to determine the chances of a candidate edge
+      being chosen by the ant.
   '''
   def __init__(self, world, s_index, alpha, betha):
+    '''
+    Create and initialize a new ant (object from 'Ant').
+    
+    Details:
+      The new ant will know the attributes: *world*, *alpha*, *betha* and *start*.
+      
+    Parameters:
+      * world: an object of the class 'AntWorld' which represents a problem.
+      * alpha: the relative importance of pheromone (default=1).
+      * betha: the relative importance of the heuristic function (default=3).
+      * s_index: an index of the list *world.nodes* which defines the starting node.
+    '''
     self.world = world
     self.alpha = alpha
     self.betha = betha
