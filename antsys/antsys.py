@@ -81,6 +81,7 @@ class AntWorld:
       moment) and a candidate edge (possible choice) and returns an evaluation 
       of this candidate.
   '''
+  
   def __init__(self, nodes, r_func, c_func, h_func, init_phe=0.1):
     '''
     Initialize the world.
@@ -113,6 +114,7 @@ class AntWorld:
           for info in info_list:
             self.edges.append(Edge(start, end, info, init_phe))
 
+            
   def reset_pheromone():
     '''
     Reset the amount of pheromone on every edge to *init_phe*.
@@ -143,6 +145,7 @@ class Ant:
       combined, using *alpha* and *betha*, to determine the chances of a candidate edge
       being chosen by the ant.
   '''
+  
   def __init__(self, world, s_index, alpha, betha):
     '''
     Create and initialize a new ant (object from 'Ant').
@@ -162,7 +165,7 @@ class Ant:
     self.start = world.nodes[0] if s_index >= len(world.nodes) else world.nodes[s_index]
     self.l_best = None
 
-
+    
   def new_start(self, s_index):
     self.start = world.nodes[0] if s_index >= len(world.nodes) else world.nodes[s_index]
 
