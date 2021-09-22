@@ -106,7 +106,7 @@ class AntWorld:
     self.c_func = c_func
     self.h_func = h_func
 
-    # creating edges
+    # Creating edges.
     for start in nodes:
       for end in nodes:
         if start is not end:
@@ -167,10 +167,28 @@ class Ant:
 
     
   def new_start(self, s_index):
+    '''
+    Set a new starting node.
+    
+    Details: 
+      It selects the new starting node by using its index in the list *world.nodes*.
+      
+    Parameters:
+      * s_index: an index of the list *world.nodes* which defines the starting node.
+    '''
     self.start = world.nodes[0] if s_index >= len(world.nodes) else world.nodes[s_index]
 
 
   def _candidates(self, pos):
+    '''
+    List all candidate edges from a given node (parameter pos).
+    
+    Details:
+      This method returns a list of possible movements (edges to traverse).
+    
+    Parameters:
+      * pos: a node from *world*.
+    '''
     candidates = []
     for edge in self.world.edges:
       if (edge.end in self.unvisited) and (edge.start is pos):
@@ -181,6 +199,20 @@ class Ant:
 
 
   def _choice(self, candidates):
+    '''
+    Select an edge among the candidates
+    
+    Details:
+      This method returns the edge to be traversed. The edge selection 
+      is based on the pheromone and the *world.h_func* value of each
+      candidate edge.
+    
+    Parameters:
+      * candidates: a list of candidate edges (possible movements).
+    '''
+    
+    # Calculating probabilities related to pheromone and the heuristic
+    # function.
     h_probs = []
     p_probs = []
     
@@ -194,13 +226,13 @@ class Ant:
     h_probs = (max(h_probs)-h_probs)/(max(h_probs)-min(h_probs))+1
     h_probs = h_probs/sum(h_probs)
     p_probs = p_probs/sum(p_probs)
-
+    
+    # Combining both probabilities using *alpha* and *betha*
     f_probs = (self.alpha * p_probs + self.betha * h_probs)/ (self.alpha + self.betha)
 
+    # Selecting the edge to be traversed
     draw = random.random()
-
     roullete = 0
-
     for i in range(len(f_probs)):
       prob = f_probs[i]
       roullete+=prob
