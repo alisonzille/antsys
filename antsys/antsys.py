@@ -242,26 +242,37 @@ class Ant:
 
 
   def create_path(self):
+    '''
+    Create the path traveled by the ant across the world
+    
+    Details:
+      Through this method an object from the class 'Ant' contructs a path in *traveled*. 
+      It is a possible solution comprising the traveled edges. The tour, visited nodes, 
+      is also stored, which is the attribute *visited*.
+    '''
+    
+    # Initialize path and tour variables
     self.visited = []
     self.traveled = []
     self.unvisited = self.world.nodes.copy()
     pos = self.start
 
     while(True):      
-      # cria a lista de arestas candidatas
+      # List the possible movements from the current position
       candidates = self._candidates(pos)
 
-      # escolha do movimento
+      # Select a movement
       choice = self._choice(candidates)
 
-      # efetua movimento
+      # Make the selected movement (traverse the edge)
       self.traveled.append(choice)
 
-      # marca nó de destino como visitado
+      # Mark the end node of the traversed edge as visited
       self.unvisited.remove(choice.end)
       self.visited.append(choice.end)
 
       if len(self.unvisited)==0:
+        # Conclude the path and return its cost
         cost = self.world.c_func(self.traveled)
         if self.l_best is None:
           self.l_best = (cost, self.visited, self.traveled)
@@ -269,10 +280,21 @@ class Ant:
           self.l_best = (cost, self.visited, self.traveled) 
         return cost
       else:
+        # Update the current position
         pos = self.visited[-1]
 
 
   def pheromone_update(self, phe_dep):
+    '''
+    Update the pheromone deposited across the path
+    
+    Details:
+      Each traveled edge receives an addition to the deposited pheromone. 
+      This addition is equal to the parameter phe_dep.
+    
+    Parameters:
+      * phe_dep: value to be added to the pheromone deposit.
+    '''
     for edge in self.traveled:
       edge.pheromone += phe_dep
 
