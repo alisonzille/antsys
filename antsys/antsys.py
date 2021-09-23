@@ -300,18 +300,7 @@ class Ant:
       edge.pheromone += phe_dep
 
 
-###########################################################################
-# Classe AntSystem
-# world = mundo
-# n_ants = número de formigas
-# rand_start =
-# evap_rate = taxa de evaporação (entre 0 e 1)
-# phe_dep = depósito de feromônio por formiga
-# elite_p_ants = percentual de formigas de elite (entre 0 e 1) - 0.3 = 30% da colônia
-# phe_dep_elite = reforço de feromônio para as formigas elite
-# alpha = influência relativa do feromônio
-# betha = influência relativa da heurística 
-# g_best = melhor global - tupla (custo, nós visitados, arestas usadas)
+      
 class AntSystem:
   '''
   Description: The ant colony optimization system
@@ -330,11 +319,8 @@ class AntSystem:
     * g_best: best solution found (global best is a tuple (cost, tour, path)).
     
   Additional Information:
-    * The path is constructed and stored in the attribute *traveled*.
-    * Both the deposited pheromone and the value returned by the function *world.h_func* 
-      can be translated to probability values for any edge. These probability values are
-      combined, using *alpha* and *betha*, to determine the chances of a candidate edge
-      being chosen by the ant.
+    * The best solution found by the colony is stored in *g_best*.
+    * The solution search process is executed by calling the function optimize.
   '''
   def __init__(self, world, n_ants, rand_start=True, alpha=1, betha=3, phe_dep=1, evap_rate=0.2, elite_p_ants=0.3, phe_dep_elite=1):
     self.world = world 
@@ -358,7 +344,7 @@ class AntSystem:
 
   # max_iter = número máximo de iterações
   # n_iter_no_change = número de iterações sem mudança no melhor (g_best)
-  def optimize(self, max_iter, n_iter_no_change=10, verbose=True):
+  def optimize(self, max_iter=50, n_iter_no_change=10, verbose=True):
     count = 0
     if verbose:
       print('| iter |         min        |         max        |        best        |')
