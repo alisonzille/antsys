@@ -133,13 +133,14 @@ class Ant:
     * alpha: the relative importance of pheromone.
     * betha: the relative importance of the heuristic function.
     * start: ant's initial position/node.
-    * l_best: best solution found by the ant (local best).
+    * l_best: best solution found by the ant (local best is a tuple (cost, tour, path)).
     * traveled: list of traversed edges.
     * visited: list of visited nodes.
     * unvisited: list of not yet visited nodes.
     
   Additional Information:
     * The path is constructed and stored in the attribute *traveled*.
+    * The tour is equivalent to *visited*
     * Both the deposited pheromone and the value returned by the function *world.h_func* 
       can be translated to probability values for any edge. These probability values are
       combined, using *alpha* and *betha*, to determine the chances of a candidate edge
@@ -312,6 +313,29 @@ class Ant:
 # betha = influência relativa da heurística 
 # g_best = melhor global - tupla (custo, nós visitados, arestas usadas)
 class AntSystem:
+  '''
+  Description: The ant colony optimization system
+  
+  Attributes:
+    * world: an object of the class 'AntWorld' which represents a problem.
+    * n_ants: the number of ants.
+    * rand_start: it defines if the ants will start from a random position (True) 
+      or at the first node (False).
+    * alpha: the relative importance of pheromone.
+    * betha: the relative importance of the heuristic function.
+    * phe_dep: pheromone deposited per ant.
+    * evap_rate: pheromone evaporation rate (a value between 0 and 1).
+    * elite_p_ants: proportion of elite ants (a value between 0 and 1).
+    * phe_dep_elite: additional pheromone applied to the paths found by the elite ants.
+    * g_best: best solution found (global best is a tuple (cost, tour, path)).
+    
+  Additional Information:
+    * The path is constructed and stored in the attribute *traveled*.
+    * Both the deposited pheromone and the value returned by the function *world.h_func* 
+      can be translated to probability values for any edge. These probability values are
+      combined, using *alpha* and *betha*, to determine the chances of a candidate edge
+      being chosen by the ant.
+  '''
   def __init__(self, world, n_ants, rand_start=True, alpha=1, betha=3, phe_dep=1, evap_rate=0.2, elite_p_ants=0.3, phe_dep_elite=1):
     self.world = world 
     self.evap_rate = evap_rate
