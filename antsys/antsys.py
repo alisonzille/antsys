@@ -200,7 +200,7 @@ class Ant:
 
   def _choice(self, candidates):
     '''
-    Select an edge among the candidates
+    Select an edge among the candidates.
     
     Details:
       This method returns the edge to be traversed. The edge selection 
@@ -243,7 +243,7 @@ class Ant:
 
   def create_path(self):
     '''
-    Create the path traveled by the ant across the world
+    Create the path traveled by the ant across the world.
     
     Details:
       Through this method an object from the class 'Ant' contructs a path in *traveled*. 
@@ -251,28 +251,28 @@ class Ant:
       is also stored, which is the attribute *visited*.
     '''
     
-    # Initialize path and tour variables
+    # Initialize path and tour variables.
     self.visited = []
     self.traveled = []
     self.unvisited = self.world.nodes.copy()
     pos = self.start
 
     while(True):      
-      # List the possible movements from the current position
+      # List the possible movements from the current position.
       candidates = self._candidates(pos)
 
-      # Select a movement
+      # Select a movement.
       choice = self._choice(candidates)
 
-      # Make the selected movement (traverse the edge)
+      # Make the selected movement (traverse the edge).
       self.traveled.append(choice)
 
-      # Mark the end node of the traversed edge as visited
+      # Mark the end node of the traversed edge as visited.
       self.unvisited.remove(choice.end)
       self.visited.append(choice.end)
 
       if len(self.unvisited)==0:
-        # Conclude the path and return its cost
+        # Conclude the path and return its cost.
         cost = self.world.c_func(self.traveled)
         if self.l_best is None:
           self.l_best = (cost, self.visited, self.traveled)
@@ -286,7 +286,7 @@ class Ant:
 
   def pheromone_update(self, phe_dep):
     '''
-    Update the pheromone deposited across the path
+    Update the pheromone deposited across the path.
     
     Details:
       Each traveled edge receives an addition to the deposited pheromone. 
