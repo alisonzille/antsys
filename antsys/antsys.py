@@ -177,7 +177,7 @@ class Ant:
     Parameters:
       * s_index: an index of the list *world.nodes* which defines the starting node.
     '''
-    self.start = world.nodes[0] if s_index >= len(world.nodes) else world.nodes[s_index]
+    self.start = self.world.nodes[0] if s_index >= len(self.world.nodes) else self.world.nodes[s_index]
 
 
   def _candidates(self, pos):
@@ -445,4 +445,3 @@ class AntSystem:
       # Finish the optimization process if *g_best* is not updated for n_iter_no_change iterations
       if count >= n_iter_no_change:
         break
-
