@@ -375,13 +375,26 @@ class AntSystem:
     for ant in range(self.n_ants):
       # Define for each ant the starting node
       s_index = random.randint(0, limit) if self.rand_start else 0
-      # Create a new ant (object from 'Ant')
+      # Create a new ant (an object from the class 'Ant') and add it to the colony
       self.ants.append(Ant(self.world, s_index, self.alpha, self.betha))
 
       
   # max_iter = número máximo de iterações
   # n_iter_no_change = número de iterações sem mudança no melhor (g_best)
   def optimize(self, max_iter=50, n_iter_no_change=10, verbose=True):
+    '''
+    Execute the optimization process
+    
+    Details:
+      An iterative optimization process that will stop if either the maximum total of iterations 
+      (parameter max_iter) or the maximum number of iterations without updating the global best 
+      (parameter n_iter_no_change) is reached.
+      
+    Parameters:
+      * max_iter: the maximum total of iterations (default=50)
+      * n_iter_no_change: the maximum number of iterations without updating *g_best* (default=10)
+      * verbose: exibe (True) or hide (False) optimization log (default=True)
+    '''
     count = 0
     if verbose:
       print('| iter |         min        |         max        |        best        |')
