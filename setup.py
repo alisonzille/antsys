@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
   name='antsys',
-  version='0.1.0',
+  version='0.1.25',
   url='https://github.com/alisonzille/antsys',
   description='AntSys - General Purpose Ant Colony Optimization System',
   author='Alison Zille Lopes',
@@ -15,5 +15,5 @@ setup(
   long_description_content_type='text/markdown',
   keywords=['ACO', 'optimization', 'ant'],
   packages=find_packages(),
-  install_requires=['numpy', 'random'],
+  install_requires=['numpy'],
 )
