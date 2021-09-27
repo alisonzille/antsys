@@ -392,10 +392,13 @@ class AntSystem:
       
     Parameters:
       * max_iter: the maximum total of iterations (default=50)
-      * n_iter_no_change: the maximum number of iterations without updating *g_best* (default=10)
+      * n_iter_no_change: the maximum number of iterations without update *g_best* (default=10)
       * verbose: exibe (True) or hide (False) optimization log (default=True)
     '''
+    
+    # Initialize the couter of iterations without *g_best* update
     count = 0
+    
     if verbose:
       print('| iter |         min        |         max        |        best        |')
     for iter in range(1, max_iter+1):
