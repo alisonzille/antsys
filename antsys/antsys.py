@@ -308,6 +308,7 @@ class AntSystem:
   Attributes:
     * world: an object of the class 'AntWorld' which represents a problem.
     * n_ants: the number of ants.
+    * ants: the colony (a list of objects from class 'Ant')
     * rand_start: it defines if the ants will start from a random position (True) 
       or at the first node (False).
     * alpha: the relative importance of pheromone.
@@ -322,7 +323,25 @@ class AntSystem:
     * The best solution found by the colony is stored in *g_best*.
     * The solution search process is executed by calling the function optimize.
   '''
+  
   def __init__(self, world, n_ants, rand_start=True, alpha=1, betha=3, phe_dep=1, evap_rate=0.2, elite_p_ants=0.3, phe_dep_elite=1):
+    '''
+    Initialize the system before starting the optimization process.
+    
+    Details:
+      The main attibutes are initialized as well as the colony.
+      
+    Parameters:
+      * world: an object of the class 'AntWorld' which represents a problem.
+      * n_ants: the number of ants.
+      * rand_start: start from a random position (True) or at the first node (False) (default=True).
+      * alpha: the relative importance of pheromone (default=1).
+      * betha: the relative importance of the heuristic function (default=3).
+      * phe_dep: pheromone deposited per ant (default=1).
+      * evap_rate: pheromone evaporation rate (default=0.2 - 20% evaporate).
+      * elite_p_ants: proportion of elite ants (default=0.3 - 30% are elite ants).
+      * phe_dep_elite: additional pheromone applied to the paths found by the elite ants (default=1).
+    '''
     self.world = world 
     self.evap_rate = evap_rate
     self.n_ants = n_ants
@@ -333,15 +352,33 @@ class AntSystem:
     self.elite_p_ants = elite_p_ants
     self.phe_dep_elite = phe_dep_elite
     self.g_best = None
+    
+    # Initialize the colony
     self.start_colony()
 
+    
   def start_colony(self):
+    '''
+    Initialize the colony
+    
+    Details: 
+      This method creates a new list of ants. Each ant is an object from class 'Ant', so
+      a solution finder.
+    '''
+    
+    # Initialize the colony as empty
     self.ants = []
+    # Get the last index of *world.nodes*
     limit = len(self.world.nodes)-1
+    
+    # Populate the colony
     for ant in range(self.n_ants):
+      # Define for each ant the starting node
       s_index = random.randint(0, limit) if self.rand_start else 0
+      # Create a new ant (object from 'Ant')
       self.ants.append(Ant(self.world, s_index, self.alpha, self.betha))
 
+      
   # max_iter = número máximo de iterações
   # n_iter_no_change = número de iterações sem mudança no melhor (g_best)
   def optimize(self, max_iter=50, n_iter_no_change=10, verbose=True):
