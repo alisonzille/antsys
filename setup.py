@@ -7,7 +7,7 @@ setup(
   name='antsys',
   version='0.1.0',
   url='https://github.com/alisonzille/antsys',
-  description='AntSys - General Purpose Ant Colony Optimization System'
+  description='AntSys - General Purpose Ant Colony Optimization System',
   author='Alison Zille Lopes',
   author_email='alisonzille@gmail.com',
   license='GNU General Public License v3 (GPLv3)',
