@@ -426,7 +426,7 @@ class AntSystem:
         ants[i][1].pheromone_update(self.phe_dep_elite)
 
       # Pheromone evaporation
-      for edge in world.edges:
+      for edge in self.world.edges:
         edge.pheromone *= 1-self.evap_rate
 
       # Update global best (*g_best*)
