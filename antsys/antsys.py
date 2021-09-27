@@ -379,8 +379,6 @@ class AntSystem:
       self.ants.append(Ant(self.world, s_index, self.alpha, self.betha))
 
       
-  # max_iter = número máximo de iterações
-  # n_iter_no_change = número de iterações sem mudança no melhor (g_best)
   def optimize(self, max_iter=50, n_iter_no_change=10, verbose=True):
     '''
     Execute the optimization process
@@ -393,14 +391,14 @@ class AntSystem:
     Parameters:
       * max_iter: the maximum total of iterations (default=50)
       * n_iter_no_change: the maximum number of iterations without update *g_best* (default=10)
-      * verbose: exibe (True) or hide (False) optimization log (default=True)
+      * verbose: show (True) or hide (False) optimization log (default=True)
     '''
     
     # Initialize the counter of iterations without *g_best* update
     count = 0
     
-    # Show the log header
     if verbose:
+      # Show the log header
       print('| iter |         min        |         max        |        best        |')
     
     # For each optimization iteration 
@@ -440,8 +438,8 @@ class AntSystem:
       else:
         count+=1
         
-      # Show the log information of the current iteration
       if verbose:
+        # Show the log information of the current iteration
         print('|%6i|%20g|%20g|%20g|' % (iter, ants[0][0], ants[-1][0], self.g_best[0]))
         
       # Finish the optimization process if *g_best* is not updated for n_iter_no_change iterations
