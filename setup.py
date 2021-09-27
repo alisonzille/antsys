@@ -12,7 +12,7 @@ setup(
   author_email='alisonzille@gmail.com',
   license='GNU General Public License v3 (GPLv3)',
   long_description=readme,
-  long_description_content_type="text/markdown",
+  long_description_content_type='text/markdown',
   keywords=['ACO', 'optimization', 'ant'],
   packages=find_packages(),
   install_requires=['numpy', 'random'],
