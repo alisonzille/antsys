@@ -396,37 +396,42 @@ class AntSystem:
       * verbose: exibe (True) or hide (False) optimization log (default=True)
     '''
     
-    # Initialize the couter of iterations without *g_best* update
+    # Initialize the counter of iterations without *g_best* update
     count = 0
     
+    # Show the log header
     if verbose:
       print('| iter |         min        |         max        |        best        |')
+    
+    # For each optimization iteration 
     for iter in range(1, max_iter+1):
       ants = []
+      # For each ant
       for ant in self.ants:
-        # cria caminho
+        # Create path
         cost = ant.create_path()
 
-        # atualiza feromônio depositado
+        # Update pheromone through the path
         ant.pheromone_update(self.phe_dep)
-
+        
+        # Store the ant and the cost of its current path
         ants.append((cost, ant))
 
-      # ordena pelo custo
+      # Sort ants by the cost of its current path
       def sort_cost(e):
         return e[0]
       ants.sort(key=sort_cost)
 
-      # atualização de formigas de elite
+      # Increase the pheromone through the elite's path
       n_elite_ants = round(self.elite_p_ants * len(ants))
       for i in range(n_elite_ants):
         ants[i][1].pheromone_update(self.phe_dep_elite)
 
-      # evaporação
+      # Pheromone evaporation
       for edge in world.edges:
         edge.pheromone *= 1-self.evap_rate
 
-      # atualiza melhor global
+      # Update global best (*g_best*)
       if self.g_best is None:
         self.g_best = (ants[0][0], ants[0][1].visited, ants[0][1].traveled)
       elif ants[0][0] < self.g_best[0]:
@@ -434,11 +439,12 @@ class AntSystem:
         self.g_best = (ants[0][0], ants[0][1].visited, ants[0][1].traveled)
       else:
         count+=1
-
+        
+      # Show the log information of the current iteration
       if verbose:
         print('|%6i|%20g|%20g|%20g|' % (iter, ants[0][0], ants[-1][0], self.g_best[0]))
         
-      # sem atualizações de g_best por n_iter_no_change interações
+      # Finish the optimization process if *g_best* is not updated for n_iter_no_change iterations
       if count >= n_iter_no_change:
         break
 
