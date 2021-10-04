@@ -69,6 +69,8 @@ class AntWorld:
     * r_func: function that defines the world creation rules.
     * c_func: function used by ants to calculate the cost of a solution.
     * h_func: heuristic function used by ants to evaluate a choice.
+    * complete: the world is a complete graph (True) or a set of choices 
+      to travel across the nodes in sequence (False)  
     * init_phe: initial pheromone per edge.
   
   Additional Information:
@@ -80,9 +82,11 @@ class AntWorld:
     * The *h_func* receives a partial path (list of traversed edges till the 
       moment) and a candidate edge (possible choice) and returns an evaluation 
       of this candidate.
+    * If *complete* is False, there will be edges only between consecutive 
+      nodes. The sequence is taken from *nodes* as a cyclic list. 
   '''
   
-  def __init__(self, nodes, r_func, c_func, h_func, init_phe=0.1):
+  def __init__(self, nodes, r_func, c_func, h_func, complete=True, init_phe=0.1):
     '''
     Initialize the world.
     
@@ -96,25 +100,49 @@ class AntWorld:
       * r_func: function that defines the world creation rules.
       * c_func: function used by ants to calculate the cost of a solution.
       * h_func: heuristic function used by ants to evaluate a choice.
+      * complete: the world is a complete graph (True) or a set of choices 
+        to travel across the nodes in sequence (False) (default=True) 
       * init_phe: initial pheromone per edge (default=0.1).
     '''
     self.nodes = nodes
-    self.edges = []
+    self.complete = complete
 
     self.init_phe = init_phe
 
+    self.r_func = r_func
     self.c_func = c_func
     self.h_func = h_func
 
     # Create the edges.
-    for start in nodes:
-      for end in nodes:
-        if start is not end:
-          info_list = r_func(start, end)
-          for info in info_list:
-            self.edges.append(Edge(start, end, info, init_phe))
+    self._create_edges()
 
             
+  def _create_edges(self):
+    '''
+    Create the edges.
+
+    Details: 
+      The world representation is formed as a complete graph or a set of choices
+      (edges) to travel across the nodes in sequence. The value of *complete* 
+      dictates witch representation is used.
+    '''
+    self.edges = []
+    if self.complete:
+      for start in self.nodes:
+        for end in self.nodes:
+          if start is not end:
+            info_list = self.r_func(start, end)
+            for info in info_list:
+              self.edges.append(Edge(start, end, info, self.init_phe))
+    else:
+      for i in range(-1, len(self.nodes)-1):
+        start = self.nodes[i]
+        end = self.nodes[i+1]
+        info_list = self.r_func(start, end)
+        for info in info_list:
+          self.edges.append(Edge(start, end, info, self.init_phe))
+
+
   def reset_pheromone():
     '''
     Reset the amount of pheromone on every edge to *init_phe*.
