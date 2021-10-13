@@ -98,5 +98,5 @@ ant_opt.optimize(50,20)
 print('\nknapsack max weight =', max_weight)
 print_solution(ant_opt.g_best[2])
 ```
-
+* A jupyter notebook version can be found [here](https://github.com/alisonzille/antsys/blob/main/examples/knapsack_antsys.ipynb) in the project's GitHub repository.
 
