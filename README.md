@@ -1,5 +1,5 @@
 # **antsys**
-a general purpose ant colony optimization system.
+A general purpose ant colony optimization system.
 <br/><br/>**Overview**
 <br/>The Ant Colony Optimization (ACO) is a technique, inspired by the foraging behavior of ants, to find good solutions for discrete optimization problems. Its central metaphor resides in the indirect communication mechanism through chemical signals (pheromones) used by many species of social ants in their search for food sources.
 <br/>The same inspiration was build in the **antsys** package, wich takes advantage of *python* flexibility to be easily applied to different optimization problems.
