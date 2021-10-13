@@ -18,7 +18,7 @@
 ------------------------------------------------------------------------------
 '''
 __author__ = 'Alison Zille Lopes'
-__version__ = '0.1.26'
+__version__ = '0.1.27'
 from antsys.antsys import Edge
 from antsys.antsys import AntWorld
 from antsys.antsys import Ant
