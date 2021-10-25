@@ -251,8 +251,11 @@ class Ant:
     
     h_probs = np.array(h_probs)
     p_probs = np.array(p_probs)
-
-    h_probs = (max(h_probs)-h_probs)/(max(h_probs)-min(h_probs))+1
+    
+    h_max = max(h_probs)
+    h_min = min(h_probs)
+    if h_max > h_min:
+      h_probs = (h_max-h_probs)/(h_max-h_min)
     h_probs = h_probs/sum(h_probs)
     p_probs = p_probs/sum(p_probs)
     
