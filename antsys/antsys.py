@@ -221,7 +221,7 @@ class Ant:
     candidates = []
     for edge in self.world.edges:
       if (edge.end in self.unvisited) and (edge.start is pos):
-        if len(self.unvisited)!=1 and (edge.end is self.start):
+        if len(self.unvisited) != 1 and (edge.end is self.start):
           continue
         candidates.append(edge)
     return candidates
@@ -242,25 +242,32 @@ class Ant:
     
     # Calculate probabilities related to pheromone and the heuristic
     # function.
-    h_probs = []
-    p_probs = []
-    
-    for edge in candidates:
-      h_probs.append(self.world.h_func(self.traveled, edge))
-      p_probs.append(edge.pheromone)
-    
-    h_probs = np.array(h_probs)
-    p_probs = np.array(p_probs)
-    
-    h_max = max(h_probs)
-    h_min = min(h_probs)
-    if h_max > h_min:
-      h_probs = (h_max-h_probs)/(h_max-h_min)
-    h_probs = h_probs/sum(h_probs)
-    p_probs = p_probs/sum(p_probs)
-    
-    # Combine both probabilities using *alpha* and *betha*
-    f_probs = (self.alpha * p_probs + self.betha * h_probs)/ (self.alpha + self.betha)
+    if self.world.h_func != None and self.betha != 0:
+      h_probs = []
+      p_probs = []
+      
+      for edge in candidates:
+        h_probs.append(self.world.h_func(self.traveled, edge))
+        p_probs.append(edge.pheromone)
+        
+      h_probs = np.array(h_probs)
+      p_probs = np.array(p_probs)
+        
+      h_max = max(h_probs)
+      h_min = min(h_probs)
+      if h_max > h_min:
+        h_probs = (h_max-h_probs)/(h_max-h_min)
+      h_probs = h_probs/sum(h_probs)
+      p_probs = p_probs/sum(p_probs)
+        
+      # Combine both probabilities using *alpha* and *betha*
+      f_probs = (self.alpha * p_probs + self.betha * h_probs)/ (self.alpha + self.betha)
+    else:
+      f_probs = []
+      for edge in candidates:
+        f_probs.append(edge.pheromone)
+      f_probs = np.array(f_probs)
+      f_probs = f_probs/sum(f_probs)
 
     # Select the edge to be traversed
     draw = random.random()
@@ -303,7 +310,7 @@ class Ant:
       self.unvisited.remove(choice.end)
       self.visited.append(choice.end)
 
-      if len(self.unvisited)==0:
+      if len(self.unvisited) == 0:
         # Conclude the path and return its cost.
         cost = self.world.c_func(self.traveled)
         if self.l_best is None:
@@ -349,7 +356,8 @@ class AntSystem:
     * elite_p_ants: proportion of elite ants (a value between 0 and 1).
     * phe_dep_elite: additional pheromone applied to the paths found by the elite ants.
     * g_best: best solution found (global best is a tuple (cost, tour, path)).
-    
+    * cost_history: g_best cost history through the optimization process.
+
   Additional Information:
     * The best solution found by the colony is stored in *g_best*.
     * The solution search process is executed by calling the function optimize.
@@ -383,7 +391,8 @@ class AntSystem:
     self.elite_p_ants = elite_p_ants
     self.phe_dep_elite = phe_dep_elite
     self.g_best = None
-    
+    self.cost_history = [] 
+
     # Initialize the colony
     self.start_colony()
 
@@ -432,8 +441,10 @@ class AntSystem:
       # Show the log header
       print('| iter |         min        |         max        |        best        |')
     
-    # For each optimization iteration 
-    for iter in range(1, max_iter+1):
+    # For each optimization iteration
+    s_iter = len(self.cost_history)+1
+    f_iter = s_iter + max_iter
+    for iter in range(s_iter, f_iter):
       ants = []
       # For each ant
       for ant in self.ants:
@@ -468,7 +479,9 @@ class AntSystem:
         self.g_best = (ants[0][0], ants[0][1].visited, ants[0][1].traveled)
       else:
         count+=1
-        
+
+      self.cost_history.append(self.g_best)  
+
       if verbose:
         # Show the log information of the current iteration
         print('|%6i|%20g|%20g|%20g|' % (iter, ants[0][0], ants[-1][0], self.g_best[0]))
