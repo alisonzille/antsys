@@ -44,7 +44,7 @@ def knapsack_cost(path):
     if edge.info == 1:
       k_value += edge.end[2]
       k_weight += edge.end[1]
-  cost = 5/k_value+1/k_weight
+  cost = 1/k_value
   if k_weight > max_weight:
     cost += 1
   else:
@@ -83,7 +83,7 @@ def print_solution(path):
 ```
 7. The world (```new_world```) is created from the nodes (```items```) as a non-complete graph. In this point, ```knapsack_rules```, ```knapsack_cost``` and ```knapscack_heuristic``` are defined as respectively ```r_func```, ```c_func``` and ```h_func```. These functions are bound to the world and the first one has an important role in its structure. 
 ```python
-new_world = AntWorld(items, knapsack_rules, knapsack_cost, knapsack_heuristic, False)
+new_world = AntWorld(items, knapsack_rules, knapsack_cost, knapsack_heuristic, False, 10)
 ```
 8. Configure ```ant_opt``` as an ```AntSystem```.
 ```python
@@ -91,7 +91,7 @@ ant_opt = AntSystem(world=new_world, n_ants=100)
 ```
 9. Execute the optimization loop.
 ```python
-ant_opt.optimize(50,20)
+ant_opt.optimize(100,50)
 ```
 10. Show details about the best solution found.
 ```python
@@ -99,4 +99,3 @@ print('\nknapsack max weight =', max_weight)
 print_solution(ant_opt.g_best[2])
 ```
 * A jupyter notebook version can be found [here](https://github.com/alisonzille/antsys/blob/main/examples/knapsack_antsys.ipynb) in the project's GitHub repository.
-
