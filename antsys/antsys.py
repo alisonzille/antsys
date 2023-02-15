@@ -480,7 +480,7 @@ class AntSystem:
       else:
         count+=1
 
-      self.cost_history.append(self.g_best)  
+      self.cost_history.append(self.g_best[0])  
 
       if verbose:
         # Show the log information of the current iteration
