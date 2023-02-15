@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
   name='antsys',
-  version='0.1.42',
+  version='0.1.44',
   url='https://github.com/alisonzille/antsys',
   description='AntSys - General Purpose Ant Colony Optimization System',
   author='Alison Zille Lopes',
